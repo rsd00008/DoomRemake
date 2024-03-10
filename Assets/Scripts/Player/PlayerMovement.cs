@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     public float insideGravityScale = -15f;
     private float gravityScale;
 
-    private Animator animatorController;
+    // private Animator animatorController;
 
     public TextMeshProUGUI taskText;
     public bool hasJumped = false; //para detectar si el jugador ha saltado
@@ -29,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
-        animatorController = GetComponent<Animator>();  
+        // animatorController = GetComponent<Animator>();  
     }
 
     private void Update()
@@ -53,8 +53,8 @@ public class PlayerMovement : MonoBehaviour
             float x = Input.GetAxis("Horizontal");
             float z = Input.GetAxis("Vertical");
 
-            animatorController.SetFloat("VelX", x);
-            animatorController.SetFloat("VelZ", z);
+            // animatorController.SetFloat("VelX", x);
+            // animatorController.SetFloat("VelZ", z);
 
             // Utiliza la orientación de la cámara para calcular la dirección del movimiento
             Vector3 forward = cameraTransform.forward;
@@ -71,7 +71,7 @@ public class PlayerMovement : MonoBehaviour
                 moveInput *= runSpeed;
                 hasSprinted = true; // Indica que el jugador ha sprintado
 
-                animatorController.SetBool("isRunning", true);
+                // animatorController.SetBool("isRunning", true);
            
             }else{
                 moveInput *= walkSpeed;
@@ -83,11 +83,11 @@ public class PlayerMovement : MonoBehaviour
                 moveInput.y = Mathf.Sqrt(jumpHeight * -2f * gravityScale); // Aplica impulso del salto
                 hasJumped = true; // Indica que el jugador ha saltado
 
-                animatorController.SetBool("isJumping", true);
+                // animatorController.SetBool("isJumping", true);
             }
             
         }else{
-            animatorController.SetBool("isJumping", false);
+            // animatorController.SetBool("isJumping", false);
         }
 
         moveInput.y += gravityScale * Time.deltaTime; // Aplica gravedad constantemente
