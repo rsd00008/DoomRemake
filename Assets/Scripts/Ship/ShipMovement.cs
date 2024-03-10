@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using TMPro;
 
 public class ShipMovement : MonoBehaviour, IAction
 {
@@ -9,6 +10,10 @@ public class ShipMovement : MonoBehaviour, IAction
     private Vector3 startPosition; //estado inicial
     public Vector3 targetPosition; //estado final
     public float lerpDuration; //duracion de transicion
+
+    public TaskIconMovement taskIconMovement;
+
+    public TextMeshProUGUI taskText;
 
     public AnimationCurve curve; //curva de animacion -> muestra como se va a realizar la animacion (rapido al principio y al final pero lento a la mitad, rapido solo al principio y el resto lento, cada vez mas rapido, ... eje x de la curva es el tiempo y el eje y es la velocidad)
 
@@ -36,6 +41,8 @@ public class ShipMovement : MonoBehaviour, IAction
     {
         if (activated == false)
         {
+            taskIconMovement.enabled = false;
+            taskText.text = "Talk to Kyle";
             StartCoroutine(LerpPosition(startPosition, targetPosition, lerpDuration)); //Se ejecuta corutina con los parametros aportados
             activated = true;
         }
@@ -59,6 +66,8 @@ public class ShipMovement : MonoBehaviour, IAction
 
         transform.position = target; //como nunca llega a 2 segundos puesto que deltaTime es variable, le asignamos 50 a 
         Destroy(ObjectToDisappear);
+
+        taskIconMovement.enabled = true;
 
         // Disparamos evento para rotar entrada al acabar el script
         OnMovementComplete?.Invoke();

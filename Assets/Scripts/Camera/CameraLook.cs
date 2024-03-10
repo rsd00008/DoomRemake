@@ -5,8 +5,8 @@ using UnityEngine;
 public class CameraLook : MonoBehaviour
 {
     public float mouseSensitivity = 80f;
-    public Transform playerHead;
-    private float xRotation = 0;
+    public Transform playerBody; // Referencia al cuerpo del jugador para ajustar su rotación
+    private float xRotation = 0f;
 
     void Start()
     {
@@ -18,14 +18,10 @@ public class CameraLook : MonoBehaviour
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
-        xRotation = xRotation - mouseY;
-        xRotation = Mathf.Clamp(xRotation, -80f, 80f); //eje Y realmente
-        transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
+        xRotation -= mouseY;
+        xRotation = Mathf.Clamp(xRotation, -80f, 80f);
 
-        //yRotation = yRotation - mouseX;
-        //yRotation = Mathf.Clamp(yRotation, -80f, 80f); //eje Y realmente
-        //transform.localRotation = Quaternion.Euler(0, yRotation, 0);
-
-        playerHead.Rotate(Vector3.up * mouseX);
+        transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+        playerBody.Rotate(Vector3.up * mouseX); // Rota el cuerpo del jugador en el eje Y basado en el movimiento del ratón.
     }
 }

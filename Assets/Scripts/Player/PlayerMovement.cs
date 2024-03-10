@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using TMPro;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -10,6 +12,10 @@ public class PlayerMovement : MonoBehaviour
     public float outsideGravityScale = -15f;
     public float insideGravityScale = -15f;
     private float gravityScale;
+
+    public TextMeshProUGUI taskText;
+    public bool hasJumped = false; //para detectar si el jugador ha saltado
+    public bool hasSprinted = false; //para detectar si el jugador ha sprintado
     
 
     public Transform cameraTransform; // Agrega una referencia a la Transform de la cámara
@@ -17,8 +23,6 @@ public class PlayerMovement : MonoBehaviour
     Vector3 moveInput = Vector3.zero;
     CharacterController characterController;
 
-    private Vector3 forwardProjected;
-    private Vector3 rightProjected;
 
     private void Awake()
     {
@@ -41,32 +45,41 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move()
     {
-        if (characterController.isGrounded) //si está en el suelo
+        if (characterController.isGrounded)
         {
-            float x = -Input.GetAxis("Horizontal");
-            float z = -Input.GetAxis("Vertical");
+            float x = Input.GetAxis("Horizontal");
+            float z = Input.GetAxis("Vertical");
 
-            moveInput = transform.TransformDirection(cameraTransform.right * x + cameraTransform.forward * z);
-            moveInput.y = 0; // Ignora el movimiento en el eje Y para no afectar el salto/gravedad
+            // Utiliza la orientación de la cámara para calcular la dirección del movimiento
+            Vector3 forward = cameraTransform.forward;
+            Vector3 right = cameraTransform.right;
+            forward.y = 0;
+            right.y = 0;
+            forward.Normalize();
+            right.Normalize();
 
-            moveInput = Vector3.ClampMagnitude(moveInput, 1f); //para limitar y asegurarse de que el movimiento diagonal no exceda velocidad
-
-            if (Input.GetButton("Sprint")) //si se mantiene presionado el boton sprint
-            {
-                moveInput = transform.TransformDirection(moveInput) * runSpeed;
+            moveInput = forward * z + right * x;
+            moveInput = Vector3.ClampMagnitude(moveInput, 1f); // Limita el movimiento diagonal
+            
+            if (Input.GetButton("Sprint")){
+                moveInput *= runSpeed;
+                hasSprinted = true; // Indica que el jugador ha sprintado
+           
+            }else{
+                moveInput *= walkSpeed;
             }
-            else
-            {
-                moveInput = transform.TransformDirection(moveInput) * walkSpeed;
-            }
 
-            if (Input.GetButtonDown("Jump")) //si se mantiene presionado el boton space
-            {
-                moveInput.y = Mathf.Sqrt(jumpHeight * -2f * gravityScale);
+            moveInput.y = 0; // Prepara el componente y para el salto o la gravedad
+
+            if (Input.GetButtonDown("Jump")){
+                moveInput.y = Mathf.Sqrt(jumpHeight * -2f * gravityScale); // Aplica impulso del salto
+                hasJumped = true; // Indica que el jugador ha saltado
+
             }
         }
 
-        moveInput.y += gravityScale * Time.deltaTime;
-        characterController.Move(moveInput * Time.deltaTime);
+        moveInput.y += gravityScale * Time.deltaTime; // Aplica gravedad constantemente
+
+        characterController.Move(moveInput * Time.deltaTime); // Mueve el personaje
     }
 }

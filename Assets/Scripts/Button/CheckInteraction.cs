@@ -63,8 +63,11 @@ public class CheckInteraction : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E) && currentReceiver != null)
             {
                 if(activatedButtons.Contains(currentReceiver.name) == false)
-                {
-                    activatedButtons.Add(currentReceiver.name);
+                { 
+                    if(currentReceiver.name != "KyleRobot"){
+                        activatedButtons.Add(currentReceiver.name);
+                    }
+                    
                     currentReceiver.Activate();
                     textMesh.gameObject.SetActive(false);
                 }
@@ -79,6 +82,7 @@ public class CheckInteraction : MonoBehaviour
         ray = new Ray(rayOrigin, cam.transform.forward);
 
         Debug.DrawRay(rayOrigin, cam.transform.forward * minInteractionDistance, Color.green);
+        
 
         if (Physics.Raycast(ray, out hit))
         {

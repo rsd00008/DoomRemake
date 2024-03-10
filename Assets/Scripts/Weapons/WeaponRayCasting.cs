@@ -7,10 +7,12 @@ public class WeaponRayCasting : MonoBehaviour
 {
     [SerializeField] private Transform shootPosition;
     public float laserRange = 15f;
-    public float laserDuration = 0.25f;
+    public float laserDuration = 0.5f;
+    public float damage = 20f;
 
     public Camera cam;
     private LineRenderer lineRenderer;
+    public bool hasShooted = false; //para detectar si el jugador ha disparado
 
     // Start is called before the first frame update
     void Start()
@@ -21,26 +23,37 @@ public class WeaponRayCasting : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Fire1")){
+        if (Input.GetButtonDown("Fire1"))
+        {
+            hasShooted = true;
+            
             RaycastHit hit;
-            Vector3 rayOrigin = cam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0f)); //convierte punto del viewport a world space. Al pasar 0.5 para x e y, le damos 50% del ancho y alto del viweport -> el rayo sale siempre en el centro de la pantalla
-            Ray ray = new Ray(rayOrigin, cam.transform.forward); 
+            Vector3 rayOrigin = cam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0f));
+            Ray ray = new Ray(rayOrigin, cam.transform.forward);
+            
+            lineRenderer.SetPosition(0, shootPosition.position);
 
-            lineRenderer.SetPosition(0, shootPosition.position); //linea que simula disparo empieza en el punto de la pantalla
+            // Ajusta siempre el punto final del láser al centro de la pantalla, hasta el rango máximo
+            Vector3 endPosition = rayOrigin + (cam.transform.forward * laserRange);
+            lineRenderer.SetPosition(1, endPosition);
 
-            if(Physics.Raycast(ray, out hit)) //si impacta con algo 
+            if (Physics.Raycast(ray, out hit, laserRange)) // Verifica si el rayo impacta algo dentro del rango
             {
-                lineRenderer.SetPosition(1, hit.point); //linea simulada tiene punto final en punto impacto de ray cast
-                //Destroy(hit.transform.gameObject); //destruimos objeto
-            }
-            else //si no impacta con nada
-            {
-                lineRenderer.SetPosition(1, shootPosition.position + cam.transform.forward * laserRange); //dibujamos linea con rango definido por laserRange
+                if (hit.collider.gameObject.tag == "Enemy")
+                {
+                    // Aplica daño si el objeto impactado es un enemigo
+                    LifeBarLogic enemyLife = hit.collider.GetComponent<LifeBarLogic>();
+
+                    if (enemyLife != null){
+                        enemyLife.TakeDamage(damage);
+                    }
+                }
             }
 
-            StartCoroutine(RenderLine()); //para dibujar la linea
+            StartCoroutine(RenderLine());
         }
     }
+    
     IEnumerator RenderLine()
     {
         lineRenderer.enabled = true; //habilitamos lineRenderer
