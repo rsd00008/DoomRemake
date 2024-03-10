@@ -7,7 +7,10 @@ public class PlayerMovement : MonoBehaviour
     public float walkSpeed = 5f;
     public float runSpeed = 10f;
     public float jumpHeight = 1.9f;
-    public float gravityScale = -15f;
+    public float outsideGravityScale = -15f;
+    public float insideGravityScale = -15f;
+    private float gravityScale;
+    
 
     public Transform cameraTransform; // Agrega una referencia a la Transform de la cámara
 
@@ -24,6 +27,15 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        Shader.SetGlobalVector("ObjectPosition", new Vector4(this.transform.position.x, this.transform.position.y + 2, this.transform.position.z, this.transform.localScale.x));
+
+        if(transform.position.x >= -5){
+            gravityScale = insideGravityScale;
+
+        }else{
+            gravityScale = outsideGravityScale;
+        }
+        
         Move();
     }
 

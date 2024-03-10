@@ -32,9 +32,13 @@ public class ShipMovement : MonoBehaviour, IAction
         Renderer_ObjectToDisappear.material.color = color;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Activate()
     {
+        if (activated == false)
+        {
+            StartCoroutine(LerpPosition(startPosition, targetPosition, lerpDuration)); //Se ejecuta corutina con los parametros aportados
+            activated = true;
+        }
     }
 
     //corutina para hacer el Lerp (pasar de un valor inicial a final) en un tiempo determinado
@@ -81,14 +85,5 @@ public class ShipMovement : MonoBehaviour, IAction
         color.a = alpha;
 
         Renderer_ObjectToDisappear.material.color = color;
-    }
-
-    public void Activate()
-    {
-        if(activated == false)
-        {
-            StartCoroutine(LerpPosition(startPosition, targetPosition, lerpDuration)); //Se ejecuta corutina con los parametros aportados
-            activated = true;
-        }
     }
 }

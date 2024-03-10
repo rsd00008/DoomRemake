@@ -40,8 +40,6 @@ public class EntryRotation : MonoBehaviour
             // Normalizar los ángulos para comparar
             currentRotationZ = (currentRotationZ > 180) ? currentRotationZ - 360 : currentRotationZ;
 
-            Debug.Log("Mathf.Abs(currentRotationZ - rotationTarget): " + Mathf.Abs(currentRotationZ - rotationTarget));
-
             if (Mathf.Abs(currentRotationZ - rotationTarget) < 1f) // Asumiendo un pequeño margen de tolerancia
             {
                 finish = true; // Marca que la rotación se ha completado

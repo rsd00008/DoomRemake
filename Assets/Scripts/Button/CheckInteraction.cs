@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,20 +19,21 @@ public class CheckInteraction : MonoBehaviour
 
     private Camera cam;
 
-
     private Ray ray;
 
     private bool canInteract;
 
     private InteractionReceiver currentReceiver;
 
-    private UI ui;
+    public TextMesh textMesh;
+
+    private ArrayList activatedButtons = new ArrayList(); //lista de botones que han sido activados, para que no puedan volver a ser activados
 
     private void Start()
     {
-        cam = GetComponent<Camera>();
+        activatedButtons = new ArrayList();
 
-        ui = FindObjectOfType<UI>();
+        cam = GetComponent<Camera>();
 
         if (typeOfDetection == TypeOfDetection.Radial3DNoDirection)
         { 
@@ -56,18 +58,16 @@ public class CheckInteraction : MonoBehaviour
             CheckRaycast();  
         }
 
-        if (canInteract)
+        if (canInteract == true)
         {
-            #region ESPAÑOL
-            /*
-            *En esta región el personaje está viendo un objeto con el que puede interactuar
-            *En mi caso voy a hacer la lectura de la tecla E aquí mismo, pero esto se puede manejar de distintas formas
-            */
-            #endregion
-
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.E) && currentReceiver != null)
             {
-                currentReceiver.Activate();
+                if(activatedButtons.Contains(currentReceiver.name) == false)
+                {
+                    activatedButtons.Add(currentReceiver.name);
+                    currentReceiver.Activate();
+                    textMesh.gameObject.SetActive(false);
+                }
             }
         }
     }
@@ -75,41 +75,75 @@ public class CheckInteraction : MonoBehaviour
     private void CheckRaycast()
     {
         RaycastHit hit;
-        Vector3 rayOrigin = cam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0f)); //convierte punto del viewport a world space. Al pasar 0.5 para x e y, le damos 50% del ancho y alto del viweport -> el rayo sale siempre en el centro de la pantalla
-
+        Vector3 rayOrigin = cam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0f));
         ray = new Ray(rayOrigin, cam.transform.forward);
 
-        Debug.DrawRay(ray.origin, ray.direction * 5, Color.green);
+        Debug.DrawRay(rayOrigin, cam.transform.forward * minInteractionDistance, Color.green);
 
         if (Physics.Raycast(ray, out hit))
         {
             if (hit.distance < minInteractionDistance)
             {
-                currentReceiver = hit.transform.gameObject.GetComponent<InteractionReceiver>();
+                InteractionReceiver receiver = hit.transform.gameObject.GetComponent<InteractionReceiver>();
 
-                if (currentReceiver != null)
-                {
-                    DetectingAReceiver();                 
-                }
-                else
-                {
-                    canInteract = false;
+                if (receiver != null){
+                    if(receiver == currentReceiver && activatedButtons.Contains(currentReceiver.name) == false){
+                        // El receptor es el mismo que ya estábamos apuntando
+                        canInteract = true;
+                        textMesh.gameObject.SetActive(true);
+                        textMesh.text = receiver.GetInteractionMessage();
+
+                    }else{
+                        // Hemos apuntado a un nuevo receptor
+                        if (currentReceiver != null){
+                            // Desactivar el mensaje del receptor anterior
+                            textMesh.gameObject.SetActive(false);
+                        }
+
+                        currentReceiver = receiver;
+                        canInteract = true;
+
+                        if(textMesh != null && currentReceiver != null && activatedButtons.Contains(currentReceiver.name) == false){
+                            textMesh.gameObject.SetActive(true);
+                            textMesh.text = receiver.GetInteractionMessage();
+                        }
+                    }
                 }
             }
+            else
+            {
+                // El hit es válido pero está demasiado lejos
+                if (currentReceiver != null)
+                {
+                    textMesh.gameObject.SetActive(false);
+                }
+
+                canInteract = false;
+                currentReceiver = null;
+            }
+        }
+        else
+        {
+            // No hay un hit
+            if (currentReceiver != null)
+            {
+                textMesh.gameObject.SetActive(false);
+            }
+            canInteract = false;
+            currentReceiver = null;
         }
     }
 
+
+
+
+
+
+
     private void DetectingAReceiver()
     {
-        #region ESPAÑOL
-        //Aquí puedes hacer algo con el mensaje de interacción
-        #endregion
-
         canInteract = true;
-        Debug.Log(currentReceiver.GetInteractionMessage());
     }
-
-
     private void OnTriggerStay(Collider other)
     {
         if (typeOfDetection == TypeOfDetection.Radial3DNoDirection)
@@ -120,24 +154,17 @@ public class CheckInteraction : MonoBehaviour
                 DetectingAReceiver();
 
             }
-
-            
         }
     }
-
     private void OnTriggerExit(Collider other)
     {
         if (typeOfDetection == TypeOfDetection.Radial3DNoDirection)
         {
             if (other.gameObject.GetComponent<InteractionReceiver>() != null)
             {
-               
                 currentReceiver =null;
-            
                 canInteract = false;
             }
         }
     }
-
-
 }
