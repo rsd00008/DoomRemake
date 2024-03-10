@@ -1,0 +1,4 @@
+repository "TFG@rsd00008@cloud"
+  path "/"
+    br "/main"
+    co "/main"
