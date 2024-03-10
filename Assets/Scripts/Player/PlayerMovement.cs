@@ -13,6 +13,8 @@ public class PlayerMovement : MonoBehaviour
     public float insideGravityScale = -15f;
     private float gravityScale;
 
+    private Animator animatorController;
+
     public TextMeshProUGUI taskText;
     public bool hasJumped = false; //para detectar si el jugador ha saltado
     public bool hasSprinted = false; //para detectar si el jugador ha sprintado
@@ -27,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
+        animatorController = GetComponent<Animator>();  
     }
 
     private void Update()
@@ -50,6 +53,9 @@ public class PlayerMovement : MonoBehaviour
             float x = Input.GetAxis("Horizontal");
             float z = Input.GetAxis("Vertical");
 
+            animatorController.SetFloat("VelX", x);
+            animatorController.SetFloat("VelZ", z);
+
             // Utiliza la orientación de la cámara para calcular la dirección del movimiento
             Vector3 forward = cameraTransform.forward;
             Vector3 right = cameraTransform.right;
@@ -64,6 +70,8 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetButton("Sprint")){
                 moveInput *= runSpeed;
                 hasSprinted = true; // Indica que el jugador ha sprintado
+
+                animatorController.SetBool("isRunning", true);
            
             }else{
                 moveInput *= walkSpeed;
@@ -75,7 +83,11 @@ public class PlayerMovement : MonoBehaviour
                 moveInput.y = Mathf.Sqrt(jumpHeight * -2f * gravityScale); // Aplica impulso del salto
                 hasJumped = true; // Indica que el jugador ha saltado
 
+                animatorController.SetBool("isJumping", true);
             }
+            
+        }else{
+            animatorController.SetBool("isJumping", false);
         }
 
         moveInput.y += gravityScale * Time.deltaTime; // Aplica gravedad constantemente

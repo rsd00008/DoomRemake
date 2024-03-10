@@ -41,8 +41,7 @@ public class KyleRobotLogic : MonoBehaviour, IAction
     //TUTORIAL
     public GameObject banana_man; // Banana-man para practicar
     public List<GameObject> enemies; // Array de objetos que se activaran cuando interactuemos con Kyle, los enemigos
-    public int numOfEnemies = 0; // Numero de enemigos que se activaran cuando interactuemos con Kyle
-    
+
 
     //WAITING FOR PLAYER ACTIONS
     private bool waitingForJumping = false; // Si estamos esperando el salto del jugador

@@ -64,7 +64,7 @@ public class CheckInteraction : MonoBehaviour
             {
                 if(activatedButtons.Contains(currentReceiver.name) == false)
                 { 
-                    if(currentReceiver.name != "KyleRobot"){
+                    if(currentReceiver.name != "KyleRobot"){ // excepto kyleRobot, que puede ser activado de nuevo
                         activatedButtons.Add(currentReceiver.name);
                     }
                     
@@ -82,7 +82,6 @@ public class CheckInteraction : MonoBehaviour
         ray = new Ray(rayOrigin, cam.transform.forward);
 
         Debug.DrawRay(rayOrigin, cam.transform.forward * minInteractionDistance, Color.green);
-        
 
         if (Physics.Raycast(ray, out hit))
         {
