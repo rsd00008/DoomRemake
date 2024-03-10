@@ -78,7 +78,10 @@ public class KyleRobotLogic : MonoBehaviour, IAction
         kyleDialogPanel.SetActive(true); // activamos el panel de dialogo con Kyle
         buttonInteractionPanel.SetActive(false); // desactivamos el panel de interaccion con Kyle
 
+        playerMovementScript.setIsTalking(true);
+        playerMovementScript.Move();
         playerMovementScript.enabled = false; // Desactiva el movimiento del jugador
+        
         Camera.main.GetComponent<CameraLook>().enabled = false; // Desactiva el control de la cámara
         gunShotScript.enabled = false; // Desactiva por disparar
 
@@ -92,15 +95,15 @@ public class KyleRobotLogic : MonoBehaviour, IAction
 
     private void updateTaskConditions(){
         if(dialogStep <= 6){
-           playerMovementScript.hasJumped = false; // Reinicia el estado del salto del jugador
+            playerMovementScript.hasJumped = false; // Reinicia el estado del salto del jugador
         }
 
         if(dialogStep <= 7){
-           playerMovementScript.hasSprinted = false; // Reinicia el estado de sprint del jugador
+            playerMovementScript.hasSprinted = false; // Reinicia el estado de sprint del jugador
         }
 
         if(dialogStep <= 9){
-           gunShotScript.hasShooted = false; // Reinicia el estado de disparo del jugador
+            gunShotScript.hasShooted = false; // Reinicia el estado de disparo del jugador
         }
     }
 
@@ -211,6 +214,7 @@ public class KyleRobotLogic : MonoBehaviour, IAction
         kyleDialogPanel.SetActive(false);
         kyleIsTalking = false;
         
+        playerMovementScript.setIsTalking(false);
         playerMovementScript.enabled = true; // Reactiva el movimiento
         Camera.main.GetComponent<CameraLook>().enabled = true; // Reactiva el control de la cámara
         gunShotScript.enabled = true; // Activa por disparar
@@ -334,6 +338,7 @@ public class KyleRobotLogic : MonoBehaviour, IAction
 
             buttonInteractionPanel.SetActive(false); // desactivamos el panel de interaccion con Kyle
             
+            playerMovementScript.setIsTalking(false);
             playerMovementScript.enabled = true; // Reactiva el movimiento
             Camera.main.GetComponent<CameraLook>().enabled = true; // Reactiva el control de la cámara
             gunShotScript.enabled = true; // Activa por disparar

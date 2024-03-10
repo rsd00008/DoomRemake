@@ -63,6 +63,7 @@ public class EnemyFollowsPlayer : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) {
         Debug.Log("Collision with: "+other.gameObject.name+"("+other.gameObject.tag+")");
+        
         if(other.gameObject.tag == "Player"){
             Debug.Log("Player hit");
             LifeBarLogic playerLife = other.GetComponent<LifeBarLogic>();

@@ -13,85 +13,107 @@ public class PlayerMovement : MonoBehaviour
     public float insideGravityScale = -15f;
     private float gravityScale;
 
-    // private Animator animatorController;
+    private Animator animatorController;
 
     public TextMeshProUGUI taskText;
-    public bool hasJumped = false; //para detectar si el jugador ha saltado
-    public bool hasSprinted = false; //para detectar si el jugador ha sprintado
-    
+    public bool hasJumped = false; // Para detectar si el jugador ha saltado
+    public bool hasSprinted = false; // Para detectar si el jugador ha sprintado
 
     public Transform cameraTransform; // Agrega una referencia a la Transform de la cámara
 
     Vector3 moveInput = Vector3.zero;
     CharacterController characterController;
 
+    private bool isTalking = false;
 
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
-        // animatorController = GetComponent<Animator>();  
+        animatorController = GetComponent<Animator>();  
     }
 
     private void Update()
     {
         Shader.SetGlobalVector("ObjectPosition", new Vector4(this.transform.position.x, this.transform.position.y + 2, this.transform.position.z, this.transform.localScale.x));
 
-        if(transform.position.x >= -5){
+        if (transform.position.x >= -5)
+        {
             gravityScale = insideGravityScale;
-
-        }else{
+        }
+        else
+        {
             gravityScale = outsideGravityScale;
         }
-        
+
         Move();
     }
 
-    private void Move()
+    public void Move()
     {
         if (characterController.isGrounded)
         {
-            float x = Input.GetAxis("Horizontal");
-            float z = Input.GetAxis("Vertical");
+            float x;
+            float z;
 
-            // animatorController.SetFloat("VelX", x);
-            // animatorController.SetFloat("VelZ", z);
+            if(isTalking == false){
+                x = Input.GetAxis("Horizontal");
+                z = Input.GetAxis("Vertical");
 
-            // Utiliza la orientación de la cámara para calcular la dirección del movimiento
+            }else{
+                x = 0;
+                z = 0;
+            }
+
+            animatorController.SetFloat("VelX", x);
+            animatorController.SetFloat("VelZ", z);
+
             Vector3 forward = cameraTransform.forward;
             Vector3 right = cameraTransform.right;
+
             forward.y = 0;
             right.y = 0;
+
             forward.Normalize();
             right.Normalize();
 
             moveInput = forward * z + right * x;
             moveInput = Vector3.ClampMagnitude(moveInput, 1f); // Limita el movimiento diagonal
-            
-            if (Input.GetButton("Sprint")){
+
+            if (Input.GetButton("Sprint"))
+            {
                 moveInput *= runSpeed;
-                hasSprinted = true; // Indica que el jugador ha sprintado
-
-                // animatorController.SetBool("isRunning", true);
-           
-            }else{
+                hasSprinted = true;
+                animatorController.SetBool("isRunning", true);
+            }
+            else
+            {
                 moveInput *= walkSpeed;
+                animatorController.SetBool("isRunning", false);
             }
 
-            moveInput.y = 0; // Prepara el componente y para el salto o la gravedad
+            moveInput.y = 0;
 
-            if (Input.GetButtonDown("Jump")){
-                moveInput.y = Mathf.Sqrt(jumpHeight * -2f * gravityScale); // Aplica impulso del salto
-                hasJumped = true; // Indica que el jugador ha saltado
-
-                // animatorController.SetBool("isJumping", true);
+            if (Input.GetButtonDown("Jump"))
+            {
+                moveInput.y = Mathf.Sqrt(jumpHeight * -2f * gravityScale);
+                hasJumped = true;
+                animatorController.SetBool("isJumping", true);
             }
-            
-        }else{
-            // animatorController.SetBool("isJumping", false);
+            else
+            {
+                animatorController.SetBool("isJumping", false);
+            }
+        }
+        else
+        {
+            animatorController.SetBool("isJumping", false);
         }
 
-        moveInput.y += gravityScale * Time.deltaTime; // Aplica gravedad constantemente
+        moveInput.y += gravityScale * Time.deltaTime;
+        characterController.Move(moveInput * Time.deltaTime);
+    }
 
-        characterController.Move(moveInput * Time.deltaTime); // Mueve el personaje
+    public void setIsTalking(bool p){
+        isTalking = p;
     }
 }
