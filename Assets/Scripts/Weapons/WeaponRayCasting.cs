@@ -6,39 +6,53 @@ using UnityEngine;
 public class WeaponRayCasting : MonoBehaviour
 {
     [SerializeField] private Transform shootPosition;
-    public float laserRange = 15f;
-    public float laserDuration = 0.5f;
+    public float range = 15f;
     public float damage = 20f;
+    public float fireRate = 15f;
+    private float timeElapsed = 0f; // tiempo transcurrido desde el último disparo
+
+    public TrailRenderer laserTrail;
+
+    public ParticleSystem[] muzzleFlash;
+    public ParticleSystem hitEffect; //efecto de impacto del láser
 
     public Camera cam;
-    private LineRenderer lineRenderer;
     public bool hasShooted = false; //para detectar si el jugador ha disparado
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        lineRenderer = GetComponent<LineRenderer>();    
+    private void Start() {
+        timeElapsed = 0f;
+        hasShooted = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Fire1"))
+        timeElapsed += Time.deltaTime;  
+
+        if (Input.GetButtonDown("Fire1") && timeElapsed >= 1f / fireRate) // Si el jugador presiona el botón de disparo y ha pasado el tiempo de recarga
         {
+            timeElapsed = 0f;
             hasShooted = true;
-            
+
+            foreach (ParticleSystem muzzle in muzzleFlash) {
+                muzzle.Emit(1);
+            }
+
             RaycastHit hit;
             Vector3 rayOrigin = cam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0f));
+
             Ray ray = new Ray(rayOrigin, cam.transform.forward);
             
-            lineRenderer.SetPosition(0, shootPosition.position);
+            var tracer = Instantiate(laserTrail, shootPosition.position, Quaternion.identity);
+            tracer.AddPosition(shootPosition.position);
 
-            // Ajusta siempre el punto final del láser al centro de la pantalla, hasta el rango máximo
-            Vector3 endPosition = rayOrigin + (cam.transform.forward * laserRange);
-            lineRenderer.SetPosition(1, endPosition);
-
-            if (Physics.Raycast(ray, out hit, laserRange)) // Verifica si el rayo impacta algo dentro del rango
+            if (Physics.Raycast(ray, out hit, range)) // Verifica si el rayo impacta algo dentro del rango
             {
+                hitEffect.transform.position = hit.point; // Mueve el efecto de impacto al punto de colisión    
+                hitEffect.transform.forward = hit.normal; // Ajusta la rotación del efecto de impacto para que sea perpendicular a la superficie impactada
+                hitEffect.Emit(1); // Emite el efecto de impacto
+
+                tracer.transform.position = hit.point; // Mueve el rastro del láser al punto de colisión
+
                 if (hit.collider.gameObject.tag == "Enemy")
                 {
                     // Aplica daño si el objeto impactado es un enemigo
@@ -49,15 +63,6 @@ public class WeaponRayCasting : MonoBehaviour
                     }
                 }
             }
-
-            StartCoroutine(RenderLine());
         }
-    }
-    
-    IEnumerator RenderLine()
-    {
-        lineRenderer.enabled = true; //habilitamos lineRenderer
-        yield return new WaitForSeconds(laserDuration); //lo habilitamos por un tiempo determinado por laserDuration
-        lineRenderer.enabled = false;  //deshabilitamos lineRenderer
     }
 }

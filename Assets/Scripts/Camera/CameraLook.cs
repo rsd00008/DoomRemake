@@ -19,6 +19,15 @@ public class CameraLook : MonoBehaviour
     private float aimingSpeed = 5f; // Controla la velocidad de la transición
     private float currentLerpTime = 0f; // Tiempo actual desde que se inició el Lerp
 
+
+    public Transform leftArm; 
+    public Transform rightArm;
+
+
+    public WeaponRaycast weaponScript; // Referencia al script de la clase RaycastWeapon
+
+
+
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -34,6 +43,9 @@ public class CameraLook : MonoBehaviour
 
         transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         playerBody.Rotate(Vector3.up * mouseX);
+
+        leftArm.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+        rightArm.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
 
         // Detecta si el botón derecho del ratón está siendo presionado o soltado
         if (Input.GetMouseButtonDown(1)) // Botón derecho presionado
