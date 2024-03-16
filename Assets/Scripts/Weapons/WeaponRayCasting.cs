@@ -9,7 +9,7 @@ public class WeaponRayCasting : MonoBehaviour
         public Vector3 initialPosition;
         public Vector3 initialVelocity;
         public TrailRenderer trail;
-        public float distanceTraveled;
+        public float distanceTraveled = 0f;
     }
 
     // SHOT PARAMS
@@ -55,7 +55,9 @@ public class WeaponRayCasting : MonoBehaviour
             time = 0,
             trail = Instantiate(laserTrail, position, Quaternion.identity)
         };
+
         b.trail.AddPosition(position);
+
         return b;
     }
 
@@ -64,6 +66,7 @@ public class WeaponRayCasting : MonoBehaviour
         for (int i = bullets.Count - 1; i >= 0; i--)
         {
             Bullet bullet = bullets[i];
+            
             Vector3 previousPosition = GetBulletPosition(bullet); // Get the position before updating time
             bullet.time += deltaTime;
             Vector3 currentPosition = GetBulletPosition(bullet); // Get the updated position
@@ -74,17 +77,18 @@ public class WeaponRayCasting : MonoBehaviour
 
             if (bullet.distanceTraveled > range) // Check if the bullet has exceeded its range
             {
-                Destroy(bullet.trail.gameObject); // Cleanup trail renderer
+                Destroy(bullet.trail.gameObject);
                 bullets.RemoveAt(i);
                 continue; // Skip the rest of the loop for this bullet
             }
 
             Ray ray = new Ray(previousPosition, currentPosition - previousPosition);
             RaycastHit hit;
+
             if (Physics.Raycast(ray, out hit, distanceMoved))
             {
                 HandleBulletHit(hit, bullet);
-                bullet.time = bulletLife; // Mark for removal
+                bullet.time = bulletLife;
             }
             else
             {
@@ -94,7 +98,7 @@ public class WeaponRayCasting : MonoBehaviour
 
             if (bullet.time >= bulletLife)
             {
-                Destroy(bullet.trail.gameObject); // Cleanup trail renderer
+                Destroy(bullet.trail.gameObject);
                 bullets.RemoveAt(i);
             }
         }
