@@ -136569,9 +136569,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shootPosition: {fileID: 354682245}
-  laserRange: 15
-  laserDuration: 0.25
+  range: 15
   damage: 10
+  fireRate: 1
   laserTrail: {fileID: 5716935865392477456, guid: bf0645f110fc01142a6ce8d704ee33f2,
     type: 3}
   muzzleFlash:
