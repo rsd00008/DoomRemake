@@ -27,7 +27,9 @@ public class KyleRobotLogic : MonoBehaviour, IAction
     private TaskIconMovement taskIconScript; // Referencia al script de movimiento del icono de tarea    
     
     public TextMeshProUGUI taskText; // Texto que se mostrara en la pantalla cuando Kyle nos encargue una mision
+    
     public GameObject buttonInteractionPanel; // Panel que se mostrara cuando estemos cerca de Kyle y podamos interactuar con el
+
     public GameObject kyleDialogPanel; // Panel que se mostrara con el dialogo de Kyle
     public TextMeshProUGUI kyleDialogText; // Panel que se mostrara con el dialogo de Kyle
 

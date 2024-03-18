@@ -22,8 +22,14 @@ public class GameManager : MonoBehaviour
     // GUI
     [Header("GUI")]
     public TextMesh dialogPanel;
+    private TextMeshProUGUI dialogPanelTMP;
+
     public TextMesh interactionPanel;
+    private TextMeshProUGUI interactionPanelTMP;
+
     public TextMesh tasksPanel;
+    private TextMeshProUGUI tasksPanelTMP;
+
     public TextMeshProUGUI healPotionAmount_text;
     public TextMeshProUGUI speedPotionAmount_text;
     public TextMeshProUGUI acidPotionAmount_text;
@@ -46,8 +52,19 @@ public class GameManager : MonoBehaviour
     }
 
     private void Start() {
-        if (dialogPanel != null)
+        if (dialogPanel != null){
             dialogPanel.gameObject.SetActive(false);
+            dialogPanelTMP = dialogPanel.GetComponent<TextMeshProUGUI>();
+        }
+
+        if (interactionPanel != null){
+            interactionPanel.gameObject.SetActive(false);
+            interactionPanelTMP = interactionPanel.GetComponent<TextMeshProUGUI>();
+        }
+
+        if (tasksPanel != null){
+            tasksPanelTMP = tasksPanel.GetComponent<TextMeshProUGUI>();
+        }
     }
 
     // Update is called once per frame
