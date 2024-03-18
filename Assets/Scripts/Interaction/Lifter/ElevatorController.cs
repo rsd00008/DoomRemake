@@ -37,5 +37,4 @@ public class ElevatorController : MonoBehaviour, IAction
             elevator.Activate(); // Activa el ascensor
         }
     }
-
 }

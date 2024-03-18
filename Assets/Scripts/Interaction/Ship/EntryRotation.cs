@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class EntryRotation : MonoBehaviour
+public class EntryRotation : MonoBehaviour, IAction
 {
     public GameObject ReferenceObject;
     public float rotationSpeed = 10.0f;
@@ -12,17 +12,8 @@ public class EntryRotation : MonoBehaviour
     private bool finish = false;
 
     private bool startRotation = false;
-    void OnEnable()
-    {
-        ShipMovement.OnMovementComplete += StartRotation;
-    }
-
-    void OnDisable()
-    {
-        ShipMovement.OnMovementComplete -= StartRotation;
-    }
-
-    void StartRotation()
+    
+    public void Activate()
     {
         startRotation = true;
     }

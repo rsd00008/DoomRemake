@@ -6,7 +6,7 @@ using TMPro;
 
 public class ShipMovement : MonoBehaviour, IAction
 {
-    public static event Action OnMovementComplete;// Declaración del evento público que notifica cuando la animación ha terminado
+    public ShipController shipController;
     private Vector3 startPosition; //estado inicial
     public Vector3 targetPosition; //estado final
     public float lerpDuration; //duracion de transicion
@@ -69,8 +69,7 @@ public class ShipMovement : MonoBehaviour, IAction
 
         taskIconMovement.enabled = true;
 
-        // Disparamos evento para rotar entrada al acabar el script
-        OnMovementComplete?.Invoke();
+        shipController.ShipHasReachedTargetPosition();
     }
 
     void hacerDesaparecer()
