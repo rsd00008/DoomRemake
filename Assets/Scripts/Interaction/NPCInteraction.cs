@@ -8,12 +8,11 @@ public class NPCInteraction : MonoBehaviour
     private Transform selection;
     private RaycastHit raycastHit;
     public float interactDistance = 5f;
-    public TextMesh interactionText;
+    public GameManager gameManager;
 
     void Start()
     {
-        if (interactionText != null)
-            interactionText.gameObject.SetActive(false);
+        gameManager.interactionPanelUpdate(false, null);
     }
 
     void Update()
@@ -22,8 +21,7 @@ public class NPCInteraction : MonoBehaviour
         if (highlight != null)
         {
             highlight = null;
-            if (interactionText != null)
-                interactionText.gameObject.SetActive(false);
+            gameManager.interactionPanelUpdate(false, null);
         }
 
         Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
@@ -36,13 +34,7 @@ public class NPCInteraction : MonoBehaviour
             if (currentHighlight.CompareTag("NPC"))
             {
                 highlight = currentHighlight; // Set the new highlight
-
-                // Show interaction message when an NPC is in focus
-                if (interactionText != null)
-                {
-                    interactionText.text = "Press E to interact";
-                    interactionText.gameObject.SetActive(true);
-                }
+                gameManager.interactionPanelUpdate(true, "Press E to interact");
             }
         }
 
@@ -54,6 +46,7 @@ public class NPCInteraction : MonoBehaviour
 
             // Activate all IAction components on the selected NPC
             IAction[] actions = selection.GetComponents<IAction>();
+            
             foreach (var action in actions)
             {
                 action.Activate();
@@ -62,8 +55,7 @@ public class NPCInteraction : MonoBehaviour
             // Reset the selection and hide the interaction text
             selection = null;
             highlight = null;
-            if (interactionText != null)
-                interactionText.gameObject.SetActive(false);
+            gameManager.interactionPanelUpdate(false, null);
         }
     }
 }
