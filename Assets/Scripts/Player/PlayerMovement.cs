@@ -15,7 +15,6 @@ public class PlayerMovement : MonoBehaviour
 
     private Animator animatorController;
 
-    public TextMeshProUGUI taskText;
     public bool hasJumped = false; // Para detectar si el jugador ha saltado
     public bool hasSprinted = false; // Para detectar si el jugador ha sprintado
 

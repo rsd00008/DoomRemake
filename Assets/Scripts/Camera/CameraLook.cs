@@ -24,10 +24,6 @@ public class CameraLook : MonoBehaviour
     public Transform rightArm;
 
 
-    public WeaponRaycast weaponScript; // Referencia al script de la clase RaycastWeapon
-
-
-
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;

@@ -17,22 +17,23 @@ public class GameManager : MonoBehaviour
     public GameState gameState;
 
     [Header("Player")]
-    public GameObject player;
+    [SerializeField] private GameObject player;
+
 
     // GUI
     [Header("GUI")]
-    public TextMesh dialogPanel;
+    [SerializeField] private TextMesh dialogPanel;
     private TextMeshProUGUI dialogPanelTMP;
 
-    public TextMesh interactionPanel;
+    [SerializeField] private TextMesh interactionPanel;
     private TextMeshProUGUI interactionPanelTMP;
 
-    public TextMesh tasksPanel;
+    [SerializeField] private TextMesh tasksPanel;
     private TextMeshProUGUI tasksPanelTMP;
 
-    public TextMeshProUGUI healPotionAmount_text;
-    public TextMeshProUGUI speedPotionAmount_text;
-    public TextMeshProUGUI acidPotionAmount_text;
+    [SerializeField] private TextMeshProUGUI healPotionAmount_text;
+    [SerializeField] private TextMeshProUGUI speedPotionAmount_text;
+    [SerializeField] private TextMeshProUGUI acidPotionAmount_text;
     
 
 
@@ -54,16 +55,33 @@ public class GameManager : MonoBehaviour
     private void Start() {
         if (dialogPanel != null){
             dialogPanel.gameObject.SetActive(false);
-            dialogPanelTMP = dialogPanel.GetComponent<TextMeshProUGUI>();
+            
+            Transform dialogTextTransform = dialogPanel.transform.Find("DialogText");
+
+            if (dialogTextTransform != null)
+            {
+                dialogPanelTMP = dialogTextTransform.GetComponent<TextMeshProUGUI>();
+            }
         }
 
         if (interactionPanel != null){
             interactionPanel.gameObject.SetActive(false);
-            interactionPanelTMP = interactionPanel.GetComponent<TextMeshProUGUI>();
+
+            Transform interactionTextTransform = interactionPanel.transform.Find("InteractionText");
+
+            if (interactionTextTransform != null)
+            {
+                interactionPanelTMP = interactionTextTransform.GetComponent<TextMeshProUGUI>();
+            }
         }
 
         if (tasksPanel != null){
-            tasksPanelTMP = tasksPanel.GetComponent<TextMeshProUGUI>();
+            Transform tasksTextTransform = tasksPanel.transform.Find("TasksText");
+
+            if (tasksTextTransform != null)
+            {
+                tasksPanelTMP = tasksTextTransform.GetComponent<TextMeshProUGUI>();
+            }
         }
     }
 
@@ -80,7 +98,7 @@ public class GameManager : MonoBehaviour
             }
             
             if(text != null){
-                dialogPanel.text = text;
+                dialogPanelTMP.text = text;
             }
         }
     }
@@ -92,7 +110,7 @@ public class GameManager : MonoBehaviour
             }
             
             if(text != null){
-                interactionPanel.text = text;
+                interactionPanelTMP.text = text;
             }
         }
     }
@@ -104,14 +122,12 @@ public class GameManager : MonoBehaviour
             }
             
             if(text != null){
-                tasksPanel.text = text;
+                tasksPanelTMP.text = text;
             }
         }
     }
 
     public void takeItem(GameObject g){
-        Debug.Log("Item taken: " + g.name);
-
         switch(g.name){
             case "HealPotion":
                 healPotionAmount++;
