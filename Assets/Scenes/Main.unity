@@ -78746,7 +78746,7 @@ MonoBehaviour:
   dialogPanel: {fileID: 2132848566}
   interactionPanel: {fileID: 23516213}
   tasksPanel: {fileID: 953541136}
-  ammoPanel: {fileID: 0}
+  ammoPanelTMP: {fileID: 1706462999}
   healPotionAmount_text: {fileID: 2069393546}
   speedPotionAmount_text: {fileID: 451345035}
   acidPotionAmount_text: {fileID: 903553884}
