@@ -63016,6 +63016,12 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!4 &1393623558 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3101568568195892175, guid: 1ed8f59498f5759489abb158b588b7d2,
+    type: 3}
+  m_PrefabInstance: {fileID: 1070157488464813207}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1394618681
 GameObject:
   m_ObjectHideFlags: 0
@@ -99490,6 +99496,11 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 649576596803194439}
+    - target: {fileID: 4734378199939312248, guid: 1ed8f59498f5759489abb158b588b7d2,
+        type: 3}
+      propertyPath: triggerTransform
+      value: 
+      objectReference: {fileID: 1393623558}
     - target: {fileID: 4811106339713075397, guid: 1ed8f59498f5759489abb158b588b7d2,
         type: 3}
       propertyPath: m_Name
@@ -105401,6 +105412,7 @@ MonoBehaviour:
   insideGravityScale: -30
   hasJumped: 0
   hasSprinted: 0
+  isSprinting: 0
   cameraTransform: {fileID: 2734449342550658110}
 --- !u!54 &5866666021572475100
 Rigidbody:
@@ -106087,6 +106099,8 @@ MonoBehaviour:
   weapon: {fileID: 119542823}
   weaponPosition: {fileID: 1547519652}
   aimingWeaponPosition: {fileID: 1676842593}
+  bobbingSpeed: 6
+  bobbingAmount: 0.01
   leftArm: {fileID: 5548795542896866525}
   rightArm: {fileID: 3971092226084948722}
 --- !u!4 &6268911775765693554

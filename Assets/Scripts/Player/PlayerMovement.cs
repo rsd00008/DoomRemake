@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
 
     public bool hasJumped = false; // Para detectar si el jugador ha saltado
     public bool hasSprinted = false; // Para detectar si el jugador ha sprintado
+    public bool isSprinting = false; // Para detectar si el jugador esta sprintand
 
     public Transform cameraTransform; // Agrega una referencia a la Transform de la cámara
 
@@ -82,14 +83,16 @@ public class PlayerMovement : MonoBehaviour
             {
                 moveInput *= runSpeed;
                 hasSprinted = true;
+                isSprinting = true;
                 animatorController.SetBool("isRunning", true);
             }
             else
             {
+                isSprinting = false;
                 moveInput *= walkSpeed;
                 animatorController.SetBool("isRunning", false);
             }
-
+            
             moveInput.y = 0;
 
             if (Input.GetButtonDown("Jump"))
@@ -114,5 +117,9 @@ public class PlayerMovement : MonoBehaviour
 
     public void setIsTalking(bool p){
         isTalking = p;
+    }
+
+    public bool isSpriting(){
+        return isSprinting;
     }
 }

@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Player")]
     [SerializeField] private GameObject player;
+    private PlayerMovement playerMovement;
 
 
     [Header("Weapons")]
@@ -60,6 +61,8 @@ public class GameManager : MonoBehaviour
     }
 
     private void Start() {
+        if (player != null) playerMovement = player.GetComponent<PlayerMovement>();
+
         if (dialogPanel != null){
             dialogPanel.gameObject.SetActive(false);
             
@@ -176,6 +179,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public bool playerIsSprinting(){
+        return playerMovement.isSpriting();
+    }   
 
     public void takeItem(GameObject g){
         switch(g.name){
