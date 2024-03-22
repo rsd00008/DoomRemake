@@ -11,10 +11,17 @@ public enum GameState {
     Menu
 }
 
+public enum ItemShowed {
+    Weapons,
+    Potions
+}
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance { get; private set; }
     public GameState gameState;
+    private ItemShowed itemShowed = ItemShowed.Weapons;
+    
 
 
     [Header("Player")]
@@ -25,6 +32,11 @@ public class GameManager : MonoBehaviour
     [Header("Weapons")]
     private int gunAmmoStored;
     private int gunAmmoLoaded;
+
+
+    [Header("Scripts")]
+    [SerializeField] private Weapon_switching weaponSwitching_script;
+    [SerializeField] private Potion_switching potionSwitching_script;
 
 
     // GUI
@@ -62,6 +74,8 @@ public class GameManager : MonoBehaviour
 
     private void Start() {
         if (player != null) playerMovement = player.GetComponent<PlayerMovement>();
+
+        UpdateItemShowed(ItemShowed.Weapons);
 
         if (dialogPanel != null){
             dialogPanel.gameObject.SetActive(false);
@@ -229,11 +243,33 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void UpdateItemShowed(ItemShowed item) {
+        itemShowed = item;
+
+        switch (itemShowed) {
+            case ItemShowed.Weapons:
+                potionSwitching_script.SelectPotion(false);
+                weaponSwitching_script.SelectWeapon(true);
+
+                break;
+
+            case ItemShowed.Potions:
+                weaponSwitching_script.SelectWeapon(false);
+                potionSwitching_script.SelectPotion(true);
+                
+                break;
+        }
+    }
+
     public int getGunAmmoStored(){
         return gunAmmoStored;
     }
 
     public int getGunAmmoLoaded(){
         return gunAmmoLoaded;
+    }
+
+    public ItemShowed getItemShowed(){
+        return itemShowed;
     }
 }

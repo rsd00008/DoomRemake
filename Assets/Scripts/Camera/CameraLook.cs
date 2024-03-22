@@ -56,7 +56,7 @@ public class CameraLook : MonoBehaviour
         leftArm.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         rightArm.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
 
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1) && GameManager.instance.getItemShowed() == ItemShowed.Weapons)
         {
             isAiming = true;
             currentLerpTime = 0f;

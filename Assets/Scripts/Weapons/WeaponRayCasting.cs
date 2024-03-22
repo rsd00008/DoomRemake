@@ -45,7 +45,6 @@ public class WeaponRayCasting : MonoBehaviour
         timeElapsed = 0f;
         hasShooted = false;
 
-        Debug.Log("WeaponRayCasting Start");
         GameManager.instance.setGunAmmo(ammoCapacity, 40);
         GameManager.instance.updateAmmoText();
     }
@@ -132,7 +131,7 @@ public class WeaponRayCasting : MonoBehaviour
         timeElapsed += Time.deltaTime;  
         UpdateBullets(Time.deltaTime);
 
-        if (Input.GetButtonDown("Fire1") && timeElapsed >= 1f / fireRate && GameManager.instance.getGunAmmoLoaded() > 0)
+        if (Input.GetButtonDown("Fire1") && timeElapsed >= 1f / fireRate && GameManager.instance.getGunAmmoLoaded() > 0 && GameManager.instance.getItemShowed() == ItemShowed.Weapons)
         {
             timeElapsed = 0f;
             hasShooted = true;
