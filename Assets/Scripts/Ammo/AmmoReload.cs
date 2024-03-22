@@ -10,7 +10,8 @@ public class AmmoReload : MonoBehaviour, IAction
     // Update is called once per frame
     public void Activate()
     {
+        Debug.Log("AmmoReload Activate");
         int ammoAmount = Random.Range(minAmmo, maxAmmo);
-        GameManager.instance.addGunAmmo(ammoAmount);
+        GameManager.instance.updateGunAmmo(ammoAmount);
     }
 }

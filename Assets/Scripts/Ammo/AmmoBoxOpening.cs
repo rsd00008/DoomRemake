@@ -33,12 +33,7 @@ public class AmmoBoxOpening : MonoBehaviour, IAction
                 ObjectToRotate.transform.rotation = targetRotation;
 
                 // Call Activate on AmmoReload
-                AmmoReload ammoReload = transform.GetComponent<AmmoReload>();
-
-                if (ammoReload != null)
-                {
-                    ammoReload.Activate();
-                }
+                transform.GetComponent<AmmoReload>();
             }
         }
     }

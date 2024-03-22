@@ -22,7 +22,8 @@ public class GameManager : MonoBehaviour
 
 
     [Header("Weapons")]
-    private int gunAmmo;
+    private int gunAmmoStored;
+    private int gunAmmoLoaded;
 
 
     // GUI
@@ -35,6 +36,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private TextMesh tasksPanel;
     private TextMeshProUGUI tasksPanelTMP;
+
+    [SerializeField] private TextMeshProUGUI ammoPanelTMP;
 
     [SerializeField] private TextMeshProUGUI healPotionAmount_text;
     [SerializeField] private TextMeshProUGUI speedPotionAmount_text;
@@ -57,8 +60,6 @@ public class GameManager : MonoBehaviour
     }
 
     private void Start() {
-        gunAmmo = 0;
-        
         if (dialogPanel != null){
             dialogPanel.gameObject.SetActive(false);
             
@@ -89,16 +90,6 @@ public class GameManager : MonoBehaviour
                 tasksPanelTMP = tasksTextTransform.GetComponent<TextMeshProUGUI>();
             }
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public void addGunAmmo(int ammo){
-        gunAmmo += ammo;
     }
 
     public void dialogPanelUpdate(bool active, string text){
@@ -136,6 +127,55 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
+    public void updateAmmoText()
+    {
+        ammoPanelTMP.text = gunAmmoLoaded + "/" + gunAmmoStored;
+    }
+
+    public void setGunAmmo(int _ammoLoaded, int _ammoStored)
+    {
+        gunAmmoLoaded = _ammoLoaded;
+        gunAmmoStored = _ammoStored;
+    }
+
+    public void updateGunAmmo(int ammo){
+        if (ammo < 0){
+            gunAmmoLoaded += ammo;
+
+        }else{
+            gunAmmoStored += ammo;
+        }
+
+        updateAmmoText();
+    }
+
+    public void reload(int ammoCapacity)
+    {
+        // Calculate the amount needed to fully reload the gun
+        int neededAmmo = ammoCapacity - gunAmmoLoaded;
+
+        if (neededAmmo <= 0) return; // If the gun is already full or overfull, no need to reload.
+
+        if (gunAmmoStored > 0)
+        {
+            if (gunAmmoStored >= neededAmmo)
+            {
+                // If there's enough or more ammo stored than needed, load what's needed and reduce stored ammo
+                gunAmmoLoaded += neededAmmo;
+                gunAmmoStored -= neededAmmo;
+            }
+            else
+            {
+                // If there's not enough ammo stored to fully reload, load what's available and empty stored ammo
+                gunAmmoLoaded += gunAmmoStored;
+                gunAmmoStored = 0;
+            }
+
+            updateAmmoText();
+        }
+    }
+
 
     public void takeItem(GameObject g){
         switch(g.name){
@@ -181,5 +221,13 @@ public class GameManager : MonoBehaviour
             //     Cursor.visible = true;
             //     break;
         }
+    }
+
+    public int getGunAmmoStored(){
+        return gunAmmoStored;
+    }
+
+    public int getGunAmmoLoaded(){
+        return gunAmmoLoaded;
     }
 }

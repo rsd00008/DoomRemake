@@ -22,6 +22,8 @@ public class WeaponRayCasting : MonoBehaviour
     [SerializeField] private float bulletSpeed = 100f;
     [SerializeField] private float bulletDrop = 0.0f;
     [SerializeField] private float bulletLife = 3.0f;
+    [SerializeField] private int ammoCapacity = 15;
+    
     [SerializeField] private ParticleSystem[] muzzleFlash;
     [SerializeField] private ParticleSystem hitEffect;
     [SerializeField] private TrailRenderer laserTrail;
@@ -38,6 +40,10 @@ public class WeaponRayCasting : MonoBehaviour
     {
         timeElapsed = 0f;
         hasShooted = false;
+
+        Debug.Log("WeaponRayCasting Start");
+        GameManager.instance.setGunAmmo(ammoCapacity, 40);
+        GameManager.instance.updateAmmoText();
     }
 
     private Vector3 GetBulletPosition(Bullet b)
@@ -122,7 +128,7 @@ public class WeaponRayCasting : MonoBehaviour
         timeElapsed += Time.deltaTime;  
         UpdateBullets(Time.deltaTime);
 
-        if (Input.GetButtonDown("Fire1") && timeElapsed >= 1f / fireRate)
+        if (Input.GetButtonDown("Fire1") && timeElapsed >= 1f / fireRate && GameManager.instance.getGunAmmoLoaded() > 0)
         {
             timeElapsed = 0f;
             hasShooted = true;
@@ -135,6 +141,13 @@ public class WeaponRayCasting : MonoBehaviour
             {
                 muzzle.Emit(1);
             }
+
+            GameManager.instance.updateGunAmmo(-1);
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            GameManager.instance.reload(ammoCapacity);
         }
     }
 }
