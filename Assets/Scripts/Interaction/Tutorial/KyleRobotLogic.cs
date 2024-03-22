@@ -19,6 +19,8 @@ public class KyleRobotLogic : MonoBehaviour, IAction
     public GameObject speedPotion; // Referencia a la poción de velocidad
     public GameObject acidPotion; // Referencia a la poción de ácido    
 
+    public GameObject ammoBox; // Referencia a la caja de municion    
+
     
     //DIALOGS
     public GameObject taskIcon; // Objecto que se situara en la cabeza de Kyle cuando tenga una tarea para nosotros
@@ -179,22 +181,30 @@ public class KyleRobotLogic : MonoBehaviour, IAction
                 break;
 
             case 18:
-                ShowDialog("Kyle: Select the potion you want to use by pressing the numbers 1, 2 or 3 and then press \"left click\" to use it");
+                ShowDialog("Kyle: Select the potion you want to use by pressing the numbers 1, 2 or 3 and then press \"Q\" to use it");
                 break;
 
             case 19:
-                ShowDialog("Kyle: You helped me a lot, so you deserve a reward !");
+                ShowDialog("Kyle: There are also lots of ammo boxes in this ship");
                 break;
 
             case 20:
-                ShowDialog("Kyle: I will give you potions to help you in your journey !");
+                ShowDialog("Kyle: Open them to get more ammo for all your weapons!");
                 break;
 
             case 21:
-                ShowDialog("Kyle: Now you are ready to fight! get throught the ship to find and kill the StarLord");
+                ShowDialog("Kyle: You helped me a lot, so you deserve a reward !");
                 break;
 
             case 22:
+                ShowDialog("Kyle: I will give you potions and an ammo box to help you in your journey !");
+                break;
+
+            case 23:
+                ShowDialog("Kyle: Now you are ready to fight! get throught the ship to find and kill the StarLord");
+                break;
+
+            case 24:
                 ShowDialog("Kyle: Good luck !");
                 break;
 
@@ -216,7 +226,7 @@ public class KyleRobotLogic : MonoBehaviour, IAction
     }
 
     void Update(){
-        if(dialogStep < 22){
+        if(dialogStep < 24){
             checkIfConditionHasDone();
             checkIfNewTask();
         }
@@ -319,10 +329,11 @@ public class KyleRobotLogic : MonoBehaviour, IAction
             }
         }
 
-        if(dialogStep == 21){
+        if(dialogStep == 23){
             healPotion.SetActive(true);
             speedPotion.SetActive(true);
             acidPotion.SetActive(true);
+            ammoBox.SetActive(true);
         }
 
         if(done == true){
