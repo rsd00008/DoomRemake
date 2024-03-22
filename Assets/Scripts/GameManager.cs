@@ -16,8 +16,13 @@ public class GameManager : MonoBehaviour
     public static GameManager instance { get; private set; }
     public GameState gameState;
 
+
     [Header("Player")]
     [SerializeField] private GameObject player;
+
+
+    [Header("Weapons")]
+    private int gunAmmo;
 
 
     // GUI
@@ -34,7 +39,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI healPotionAmount_text;
     [SerializeField] private TextMeshProUGUI speedPotionAmount_text;
     [SerializeField] private TextMeshProUGUI acidPotionAmount_text;
-    
 
 
     // ITEMS
@@ -53,6 +57,8 @@ public class GameManager : MonoBehaviour
     }
 
     private void Start() {
+        gunAmmo = 0;
+        
         if (dialogPanel != null){
             dialogPanel.gameObject.SetActive(false);
             
@@ -89,6 +95,10 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void addGunAmmo(int ammo){
+        gunAmmo += ammo;
     }
 
     public void dialogPanelUpdate(bool active, string text){

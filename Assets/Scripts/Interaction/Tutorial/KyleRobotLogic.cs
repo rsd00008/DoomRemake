@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEditor.Build;
 
 public class KyleRobotLogic : MonoBehaviour, IAction
 {
@@ -22,7 +21,6 @@ public class KyleRobotLogic : MonoBehaviour, IAction
 
     
     //DIALOGS
-    public GameManager gameManager;
     public GameObject taskIcon; // Objecto que se situara en la cabeza de Kyle cuando tenga una tarea para nosotros
     private TaskIconMovement taskIconScript; // Referencia al script de movimiento del icono de tarea    
 
@@ -71,9 +69,9 @@ public class KyleRobotLogic : MonoBehaviour, IAction
         taskIcon.SetActive(false); // desactivamos el icono de tarea (diamante)
         taskIconScript.enabled = false;   // desactivamos el script de movimiento del icono de tarea (diamante)
 
-        gameManager.tasksPanelUpdate(true, "");
-        gameManager.dialogPanelUpdate(true, null);
-        gameManager.interactionPanelUpdate(false, null);
+        GameManager.instance.tasksPanelUpdate(true, "");
+        GameManager.instance.dialogPanelUpdate(true, null);
+        GameManager.instance.interactionPanelUpdate(false, null);
         
         playerMovementScript.setIsTalking(true);
         playerMovementScript.Move();
@@ -208,7 +206,7 @@ public class KyleRobotLogic : MonoBehaviour, IAction
     
     private void EndDialog()
     {
-        gameManager.dialogPanelUpdate(false, null);
+        GameManager.instance.dialogPanelUpdate(false, null);
         kyleIsTalking = false;
         
         playerMovementScript.setIsTalking(false);
@@ -224,15 +222,15 @@ public class KyleRobotLogic : MonoBehaviour, IAction
         }
 
         if(kyleIsTalking == true){
-            gameManager.tasksPanelUpdate(true, "");
+            GameManager.instance.tasksPanelUpdate(true, "");
             timeSinceDialogStart += Time.deltaTime;
 
             if (timeSinceDialogStart >= timeToStepDialog){
-                gameManager.interactionPanelUpdate(true, null);
+                GameManager.instance.interactionPanelUpdate(true, null);
                 canProceedToNextDialog = true;
 
             }else{
-                gameManager.interactionPanelUpdate(false, null);
+                GameManager.instance.interactionPanelUpdate(false, null);
             }
 
             Vector3 posicionKyle = transform.position;
@@ -268,7 +266,7 @@ public class KyleRobotLogic : MonoBehaviour, IAction
         }
 
         if(done == true){
-            gameManager.tasksPanelUpdate(true, "Talk to Kyle");
+            GameManager.instance.tasksPanelUpdate(true, "Talk to Kyle");
 
             taskIconScript.enabled = true; // Reactiva el icono de tarea
             taskIcon.SetActive(true);  
@@ -284,13 +282,13 @@ public class KyleRobotLogic : MonoBehaviour, IAction
         if(dialogStep == 7 && playerHasJumped() == false){
             done = true;
             waitingForJumping = true;
-            gameManager.tasksPanelUpdate(true, "Press SPACE to jump");
+            GameManager.instance.tasksPanelUpdate(true, "Press SPACE to jump");
         }
 
         if(dialogStep == 8 && playerHasSprinted() == false){
             done = true;
             waitingForSprinting = true;
-            gameManager.tasksPanelUpdate(true, "Press SHIFT while moving to sprint");
+            GameManager.instance.tasksPanelUpdate(true, "Press SHIFT while moving to sprint");
         }
 
         if(dialogStep == 10 && playerHasShooted() == false){
@@ -299,7 +297,7 @@ public class KyleRobotLogic : MonoBehaviour, IAction
 
             banana_man.SetActive(true);
 
-            gameManager.tasksPanelUpdate(true, "Press LEFT CLICK to shoot");
+            GameManager.instance.tasksPanelUpdate(true, "Press LEFT CLICK to shoot");
         }
 
         if(enemies != null){
@@ -317,7 +315,7 @@ public class KyleRobotLogic : MonoBehaviour, IAction
                     }
                 }   
 
-                gameManager.tasksPanelUpdate(true, "Kill all the enemies");
+                GameManager.instance.tasksPanelUpdate(true, "Kill all the enemies");
             }
         }
 
@@ -328,12 +326,12 @@ public class KyleRobotLogic : MonoBehaviour, IAction
         }
 
         if(done == true){
-            gameManager.dialogPanelUpdate(false, null);
+            GameManager.instance.dialogPanelUpdate(false, null);
             kyleIsTalking = false;
 
             canTalkToKyle = false; // Ahora no podemos hablar con Kyle
 
-            gameManager.interactionPanelUpdate(false, null);
+            GameManager.instance.interactionPanelUpdate(false, null);
 
             playerMovementScript.setIsTalking(false);
             playerMovementScript.enabled = true; // Reactiva el movimiento
@@ -352,7 +350,7 @@ public class KyleRobotLogic : MonoBehaviour, IAction
 
     private void ShowDialog(string message)
     {
-        gameManager.dialogPanelUpdate(true, message);
+        GameManager.instance.dialogPanelUpdate(true, message);
     }
 
     private bool playerHasJumped()

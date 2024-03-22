@@ -9,11 +9,10 @@ public class SelectObject : MonoBehaviour
     private RaycastHit raycastHit;
     public float interactDistance = 5f;
 
-    public GameManager gameManager;
 
     void Start()
     {
-        gameManager.interactionPanelUpdate(false, null);
+        GameManager.instance.interactionPanelUpdate(false, null);
     }
 
     void Update()
@@ -29,7 +28,7 @@ public class SelectObject : MonoBehaviour
             
             highlight = null;
 
-            gameManager.interactionPanelUpdate(false, null);
+            GameManager.instance.interactionPanelUpdate(false, null);
         }
 
         Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
@@ -53,7 +52,7 @@ public class SelectObject : MonoBehaviour
 
                 highlight = currentHighlight;
 
-                gameManager.interactionPanelUpdate(true, "Press E to interact");
+                GameManager.instance.interactionPanelUpdate(true, "Press E to interact");
             }
         }
 
@@ -80,7 +79,7 @@ public class SelectObject : MonoBehaviour
 
             highlight = null;
 
-            gameManager.interactionPanelUpdate(false, null);
+            GameManager.instance.interactionPanelUpdate(false, null);
         }
     }
 }

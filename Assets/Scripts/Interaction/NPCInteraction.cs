@@ -8,11 +8,10 @@ public class NPCInteraction : MonoBehaviour
     private Transform selection;
     private RaycastHit raycastHit;
     public float interactDistance = 5f;
-    public GameManager gameManager;
 
     void Start()
     {
-        gameManager.interactionPanelUpdate(false, null);
+        GameManager.instance.interactionPanelUpdate(false, null);
     }
 
     void Update()
@@ -21,7 +20,7 @@ public class NPCInteraction : MonoBehaviour
         if (highlight != null)
         {
             highlight = null;
-            gameManager.interactionPanelUpdate(false, null);
+            GameManager.instance.interactionPanelUpdate(false, null);
         }
 
         Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
@@ -34,7 +33,7 @@ public class NPCInteraction : MonoBehaviour
             if (currentHighlight.CompareTag("NPC"))
             {
                 highlight = currentHighlight; // Set the new highlight
-                gameManager.interactionPanelUpdate(true, "Press E to interact");
+                GameManager.instance.interactionPanelUpdate(true, "Press E to interact");
             }
         }
 
@@ -55,7 +54,7 @@ public class NPCInteraction : MonoBehaviour
             // Reset the selection and hide the interaction text
             selection = null;
             highlight = null;
-            gameManager.interactionPanelUpdate(false, null);
+            GameManager.instance.interactionPanelUpdate(false, null);
         }
     }
 }

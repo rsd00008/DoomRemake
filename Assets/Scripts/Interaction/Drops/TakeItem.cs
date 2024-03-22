@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class TakeItem : MonoBehaviour, IAction
 {
-    public GameManager gameManager;
 
     public void Activate()
     {
-        gameManager.takeItem(gameObject);
+        GameManager.instance.takeItem(gameObject);
     }
 }
