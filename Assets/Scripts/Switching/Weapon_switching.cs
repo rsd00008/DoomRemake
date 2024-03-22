@@ -18,7 +18,8 @@ public class Weapon_switching : MonoBehaviour
 
         if(Input.GetAxis("Mouse ScrollWheel") > 0)
         {
-            Debug.Log("Scrolling up");
+            GameManager.instance.UpdateItemShowed(ItemShowed.Weapons);
+
             if(selectedWeapon >= transform.childCount - 1)
             {
                 selectedWeapon = 0;
@@ -31,7 +32,8 @@ public class Weapon_switching : MonoBehaviour
         
         if(Input.GetAxis("Mouse ScrollWheel") < 0)
         {
-            Debug.Log("Scrolling down");
+            GameManager.instance.UpdateItemShowed(ItemShowed.Weapons);
+
             if(selectedWeapon <= 0)
             {
                 selectedWeapon = transform.childCount - 1;
@@ -45,7 +47,7 @@ public class Weapon_switching : MonoBehaviour
         if(previousSelectedPotion != selectedWeapon)
         {
             GameManager.instance.UpdateItemShowed(ItemShowed.Weapons);
-            //SelectWeapon(true);
+            SelectWeapon(true);
         }
     }
 
