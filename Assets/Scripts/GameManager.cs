@@ -251,6 +251,8 @@ public class GameManager : MonoBehaviour
                 Debug.Log("Item not recognized");
                 break;
         }
+
+        
     }
 
     public void UpdateGameState(GameState state) {
@@ -293,6 +295,24 @@ public class GameManager : MonoBehaviour
     }
 
 
+    public void ResetPlayerSpeed(float originalWalkSpeed, float originalRunSpeed, float delay)
+    {
+        StartCoroutine(ResetSpeedCoroutine(originalWalkSpeed, originalRunSpeed, delay));
+    }
+
+    private IEnumerator ResetSpeedCoroutine(float originalWalkSpeed, float originalRunSpeed, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        var playerMovement = getPlayerMovement();
+        if (playerMovement != null)
+        {
+            playerMovement.walkSpeed = originalWalkSpeed;
+            playerMovement.runSpeed = originalRunSpeed;
+        }
+    }
+
+
     //----- GETTERS -----
 
     public int getGunAmmoStored(){
@@ -325,5 +345,9 @@ public class GameManager : MonoBehaviour
 
     public float getMaxPlayerLife(){
         return playerLife.GetMaxLife();
+    }
+
+    public PlayerMovement getPlayerMovement(){
+        return playerMovement;
     }
 }

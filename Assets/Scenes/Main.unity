@@ -4384,7 +4384,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 373.76, y: -0.0000073979}
+  m_AnchoredPosition: {x: 376.4, y: -0.0000073979}
   m_SizeDelta: {x: 25.845703, y: 149.9894}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &84845020
@@ -28387,7 +28387,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 172.77194, y: 179.44917}
+  m_AnchoredPosition: {x: 262.7, y: 179.44917}
   m_SizeDelta: {x: -732.4673, y: -388.344}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &596538678
@@ -28990,7 +28990,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 261.78278, y: 179.44917}
+  m_AnchoredPosition: {x: 349.92, y: 179.45}
   m_SizeDelta: {x: -732.4673, y: -388.344}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &616321916
@@ -47091,7 +47091,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 349.91888, y: 179.44917}
+  m_AnchoredPosition: {x: 175.4, y: 179.44917}
   m_SizeDelta: {x: -732.4673, y: -388.344}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &993187349
@@ -53637,6 +53637,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1144392739}
   - component: {fileID: 1144392740}
+  - component: {fileID: 1144392741}
   m_Layer: 0
   m_Name: SpeedPotion
   m_TagString: Interactive
@@ -53685,6 +53686,20 @@ CapsuleCollider:
   m_Height: 1.9882009
   m_Direction: 1
   m_Center: {x: 0, y: -0.0081539145, z: 0}
+--- !u!114 &1144392741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1144392738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c559ecce19fd54849a61d384397fabd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speedMultiplier: 2
+  effectDuration: 5
 --- !u!1001 &1145382447
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -89839,6 +89854,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1951497985}
   - component: {fileID: 1951497987}
+  - component: {fileID: 1951497988}
   m_Layer: 0
   m_Name: HealPotion
   m_TagString: Interactive
@@ -89885,6 +89901,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.7648569, y: 2, z: 1.764857}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1951497988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1951497984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cca55e454eec6d4694a0cc118bf67ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healAmount: 30
 --- !u!1 &1955067704
 GameObject:
   m_ObjectHideFlags: 0
@@ -102989,7 +103018,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!136 &2709853751194998746
 CapsuleCollider:
   m_ObjectHideFlags: 0
