@@ -8,7 +8,6 @@ public class Potion_switching : MonoBehaviour
 
     void Start()
     {
-        SelectPotion(true);
     }
 
     // Update is called once per frame
@@ -49,10 +48,10 @@ public class Potion_switching : MonoBehaviour
         {
             if (i == selectedPotion)
             {
-                if(selected == false){
-                    potion.gameObject.SetActive(false);
-                }else{
+                if(selected == true && CheckPotionAmount(potion.name) == true){
                     potion.gameObject.SetActive(true);
+                }else{
+                    potion.gameObject.SetActive(false);
                 }
             }
             else
@@ -61,6 +60,24 @@ public class Potion_switching : MonoBehaviour
             }
 
             i++;
-        } 
+        }
     }  
+
+    public bool CheckPotionAmount(string potionName)
+    {
+        if(potionName == "HealPotion")
+        {
+            return GameManager.instance.getHealPotionAmount() > 0;
+        }
+        else if(potionName == "SpeedPotion")
+        {
+            return GameManager.instance.getSpeedPotionAmount() > 0;
+        }
+        else if(potionName == "AcidPotion")
+        {
+            return GameManager.instance.getAcidPotionAmount() > 0;
+        }
+
+        return false;
+    }
 }

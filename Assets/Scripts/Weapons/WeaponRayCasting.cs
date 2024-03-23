@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using System;
-using System.Collections;
 
 public class WeaponRayCasting : MonoBehaviour
 {
@@ -29,8 +27,6 @@ public class WeaponRayCasting : MonoBehaviour
     [SerializeField] private ParticleSystem[] muzzleFlash;
     [SerializeField] private ParticleSystem hitEffect;
     [SerializeField] private TrailRenderer laserTrail;
-    [SerializeField] private Transform triggerTransform;
-
 
 
 
@@ -88,6 +84,7 @@ public class WeaponRayCasting : MonoBehaviour
             {
                 Destroy(bullet.trail.gameObject);
                 bullets.RemoveAt(i);
+
                 continue; // Skip the rest of the loop for this bullet
             }
 
@@ -118,11 +115,13 @@ public class WeaponRayCasting : MonoBehaviour
         hitEffect.transform.position = hit.point;
         hitEffect.transform.forward = hit.normal;
         hitEffect.Emit(1);
+
         bullet.trail.transform.position = hit.point;
+        
         if (hit.collider.gameObject.CompareTag("Enemy"))
         {
             LifeBarLogic enemyLife = hit.collider.GetComponent<LifeBarLogic>();
-            enemyLife?.TakeDamage(damage);
+            enemyLife?.UpdateLife(-damage);
         }
     }
 
@@ -131,7 +130,7 @@ public class WeaponRayCasting : MonoBehaviour
         timeElapsed += Time.deltaTime;  
         UpdateBullets(Time.deltaTime);
 
-        if (Input.GetButtonDown("Fire1") && timeElapsed >= 1f / fireRate && GameManager.instance.getGunAmmoLoaded() > 0 && GameManager.instance.getItemShowed() == ItemShowed.Weapons)
+        if (Input.GetButtonDown("Fire1") && timeElapsed >= 1f / fireRate && GameManager.instance.getGunAmmoLoaded() > 0)
         {
             timeElapsed = 0f;
             hasShooted = true;
@@ -146,7 +145,6 @@ public class WeaponRayCasting : MonoBehaviour
             }
 
             GameManager.instance.updateGunAmmo(-1);
-            StartCoroutine(AnimateTrigger()); // Add this line to start the trigger animation
         }
 
         if (Input.GetKeyDown(KeyCode.R))
@@ -154,26 +152,4 @@ public class WeaponRayCasting : MonoBehaviour
             GameManager.instance.reload(ammoCapacity);
         }
     }
-
-    private IEnumerator AnimateTrigger()
-    {
-        if (triggerTransform == null)
-            yield break;
-
-        // Move the trigger back
-        float time = 0.1f; // Duration of the trigger pull animation
-        Vector3 originalPosition = triggerTransform.localPosition;
-        Vector3 retractedPosition = originalPosition + triggerTransform.localRotation * new Vector3(0.01f, 0f, 0f); // Adjust as needed
-        
-        while (time > 0f)
-        {
-            triggerTransform.localPosition = Vector3.Lerp(retractedPosition, originalPosition, time / 0.05f);
-            time -= Time.deltaTime;
-            yield return null;
-        }
-
-        // Reset the position
-        triggerTransform.localPosition = originalPosition;
-    }
-
 }

@@ -42,12 +42,22 @@ public class LifeBarLogic : MonoBehaviour
     }
 
 
-    public void TakeDamage(float damage)
+    public void UpdateLife(float quantity)
     {
-        currentLife -= damage;
-        currentLife = Mathf.Clamp(currentLife, 0, maxLife); // Asegura que la vida no sea negativa
+        currentLife += quantity;
+        currentLife = Mathf.Clamp(currentLife, 0, maxLife); // Asegura que la vida no sea negativa ni por encima del maximo
 
         // Actualiza la barra de vida aquí si quieres que el cambio sea inmediato sin esperar al próximo Update
         lifeBarImage.fillAmount = currentLife / maxLife;
     }
+
+    public float GetCurrentLife()
+    {
+        return currentLife;
+    }
+
+    public float GetMaxLife()
+    {
+        return maxLife;
+    }   
 }

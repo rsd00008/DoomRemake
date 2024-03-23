@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     [Header("Player")]
     [SerializeField] private GameObject player;
     private PlayerMovement playerMovement;
+    private LifeBarLogic playerLife;
 
 
     [Header("Weapons")]
@@ -73,7 +74,10 @@ public class GameManager : MonoBehaviour
     }
 
     private void Start() {
-        if (player != null) playerMovement = player.GetComponent<PlayerMovement>();
+        if (player != null){ 
+            playerMovement = player.GetComponent<PlayerMovement>();
+            playerLife = player.GetComponent<LifeBarLogic>();
+        }
 
         UpdateItemShowed(ItemShowed.Weapons);
 
@@ -197,6 +201,10 @@ public class GameManager : MonoBehaviour
         return playerMovement.isSpriting();
     }   
 
+    public void UpdatePlayerLife(float quantity){
+        playerLife.UpdateLife(quantity);
+    }
+
     public void takeItem(GameObject g){
         switch(g.name){
             case "HealPotion":
@@ -220,6 +228,29 @@ public class GameManager : MonoBehaviour
         }
 
         Destroy(g);
+    }
+
+    public void UsedItem(GameObject g){
+        switch(g.name){
+            case "HealPotion":
+                healPotionAmount--;
+                healPotionAmount_text.text = "X " + healPotionAmount.ToString();
+                break;
+
+            case "SpeedPotion":
+                speedPotionAmount--;
+                speedPotionAmount_text.text = "X " + speedPotionAmount.ToString();
+                break;
+
+            case "AcidPotion":
+                acidPotionAmount--;
+                acidPotionAmount_text.text = "X " + acidPotionAmount.ToString();
+                break;
+
+            default:
+                Debug.Log("Item not recognized");
+                break;
+        }
     }
 
     public void UpdateGameState(GameState state) {
@@ -261,6 +292,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
+    //----- GETTERS -----
+
     public int getGunAmmoStored(){
         return gunAmmoStored;
     }
@@ -271,5 +305,25 @@ public class GameManager : MonoBehaviour
 
     public ItemShowed getItemShowed(){
         return itemShowed;
+    }
+
+    public int getHealPotionAmount(){
+        return healPotionAmount;
+    }
+
+    public int getSpeedPotionAmount(){
+        return speedPotionAmount;
+    }   
+
+    public int getAcidPotionAmount(){
+        return acidPotionAmount;
+    }
+
+    public float getPlayerLife(){
+        return playerLife.GetCurrentLife();
+    }
+
+    public float getMaxPlayerLife(){
+        return playerLife.GetMaxLife();
     }
 }

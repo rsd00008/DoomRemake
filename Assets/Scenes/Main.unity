@@ -78130,6 +78130,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1676842593}
+  - component: {fileID: 1676842594}
   m_Layer: 9
   m_Name: AimingWeaponPosition
   m_TagString: Untagged
@@ -78153,6 +78154,18 @@ Transform:
   - {fileID: 1091976454}
   m_Father: {fileID: 1547519652}
   m_LocalEulerAnglesHint: {x: 0.27, y: 1.188, z: -0.81}
+--- !u!114 &1676842594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1676842592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffc29fbbb534ee9439cc56790e9b1e21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1677898958
 GameObject:
   m_ObjectHideFlags: 0
@@ -79633,7 +79646,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameState: 0
   player: {fileID: 919132149496674327}
-  weaponSwitching_script: {fileID: 1547519653}
+  weaponSwitching_script: {fileID: 1676842594}
   potionSwitching_script: {fileID: 1749553679}
   dialogPanel: {fileID: 2132848566}
   interactionPanel: {fileID: 23516213}
