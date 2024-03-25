@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance { get; private set; }
     public GameState gameState;
     private ItemShowed itemShowed = ItemShowed.Weapons;
-    
+    [SerializeField] private Camera fpsCamera;
 
 
     [Header("Player")]
@@ -314,6 +314,9 @@ public class GameManager : MonoBehaviour
 
 
     //----- GETTERS -----
+    public Camera getFpsCamera(){
+        return fpsCamera;
+    }
 
     public int getGunAmmoStored(){
         return gunAmmoStored;
