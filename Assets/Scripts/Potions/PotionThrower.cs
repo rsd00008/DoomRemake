@@ -18,7 +18,6 @@ public class PotionThrower : MonoBehaviour{
     private float chargeTime = 0f;
 
     private void Start() {
-        Debug.Log("Press Q to throw potion");
         throwDirection = new Vector3(0,1,0);
         trajectoryLine = GetComponent<LineRenderer>();
     }
@@ -27,7 +26,6 @@ public class PotionThrower : MonoBehaviour{
     {
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            Debug.Log("Throwing potion");
             StartThrowing();
         }
 

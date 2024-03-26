@@ -258,8 +258,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9220084521314619334}
+  - component: {fileID: 7279065693957779506}
   - component: {fileID: 4188689506212213560}
-  - component: {fileID: 1267328725969354249}
+  - component: {fileID: -7657017574702900338}
   m_Layer: 0
   m_Name: AcidPotion
   m_TagString: Interactive
@@ -285,6 +286,20 @@ Transform:
   - {fileID: 6209244533768273369}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: -1.576, y: 0, z: 0}
+--- !u!114 &7279065693957779506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7435217815640588847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a62a118187377df47bc74c7de44209b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  acidSpotPrefab: {fileID: 3334297765502432872, guid: 251e9413e11866c4fafacd8b241c1008,
+    type: 3}
 --- !u!135 &4188689506212213560
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -300,13 +315,13 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &1267328725969354249
+--- !u!54 &-7657017574702900338
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -314,9 +329,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7435217815640588847}
   serializedVersion: 4
-  m_Mass: 5
-  m_Drag: 0.05
-  m_AngularDrag: 500
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
