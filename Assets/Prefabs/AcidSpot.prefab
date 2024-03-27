@@ -93,6 +93,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5839374522925243172}
   - component: {fileID: 3879859127221510772}
+  - component: {fileID: -1384326151777703798}
   m_Layer: 0
   m_Name: AcidSpot
   m_TagString: Untagged
@@ -132,12 +133,25 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1.0607405, y: 1.4138378, z: 0.14648814}
   m_Center: {x: 0.1215484, y: -0.10332422, z: -0.0022919327}
+--- !u!114 &-1384326151777703798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3334297765502432872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56012f57e4c4509439068f675dde05da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
 --- !u!1 &6947201528549629956
 GameObject:
   m_ObjectHideFlags: 0

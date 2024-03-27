@@ -300,6 +300,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   acidSpotPrefab: {fileID: 3334297765502432872, guid: 251e9413e11866c4fafacd8b241c1008,
     type: 3}
+  acidSmokePrefab: {fileID: 4986693350979482542, guid: 4cc94fe0847789944aa279691f671ab7,
+    type: 3}
+  scalingTime: 1
+  acidPrefabsLifeTime: 15
 --- !u!135 &4188689506212213560
 SphereCollider:
   m_ObjectHideFlags: 0

@@ -120,8 +120,8 @@ Material:
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
-    - _WobbleX: 0.00000017247544
-    - _WobbleZ: 0.00000017247544
+    - _WobbleX: -0.0000009801432
+    - _WobbleZ: 0.0000009801432
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
@@ -129,7 +129,7 @@ Material:
     - _BottomColor: {r: 0, g: 0.20514989, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _FillAmount: {r: -0.00039672852, g: -0.4125197, b: 0, a: 0}
+    - _FillAmount: {r: -0.00039672852, g: -0.4125243, b: 0, a: 0}
     - _FoamColor: {r: 0, g: 0.008820859, b: 0.20754719, a: 1}
     - _Rim_Color: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}

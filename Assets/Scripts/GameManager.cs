@@ -251,8 +251,6 @@ public class GameManager : MonoBehaviour
                 Debug.Log("Item not recognized");
                 break;
         }
-
-        
     }
 
     public void UpdateGameState(GameState state) {
