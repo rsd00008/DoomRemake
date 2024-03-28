@@ -11,6 +11,9 @@ public class KyleRobotLogic : MonoBehaviour, IAction
     public float rotationSpeed = 5f; // Velocidad de rotación ajustable desde el Inspector
 
 
+    public GameObject invisibleWall;
+
+
     public GameObject gun; // Referencia al arma del jugador
     private WeaponRayCasting gunShotScript; // Variable para almacenar el script de movimiento del jugador
 
@@ -141,11 +144,11 @@ public class KyleRobotLogic : MonoBehaviour, IAction
                 break;
 
             case 8:
-                ShowDialog("Kyle: Well done! Now, let's try to shoot");
+                ShowDialog("Kyle: Well done! Now, let's try to shoot, but first reload your gun by pressing \"R\" ");
                 break;
 
             case 9:
-                ShowDialog("Kyle: Press \"left click\" and kill this BANANA-MAN!");
+                ShowDialog("Kyle: Aim your gun with \"right click\" and press \"left click\" to shot this BANANA-MAN!");
                 break;
 
             case 10:
@@ -229,6 +232,9 @@ public class KyleRobotLogic : MonoBehaviour, IAction
         if(dialogStep < 24){
             checkIfConditionHasDone();
             checkIfNewTask();
+
+        }else{
+            Destroy(invisibleWall);
         }
 
         if(kyleIsTalking == true){

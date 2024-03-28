@@ -41,7 +41,7 @@ public class WeaponRayCasting : MonoBehaviour
         timeElapsed = 0f;
         hasShooted = false;
 
-        GameManager.instance.setGunAmmo(ammoCapacity, 40);
+        GameManager.instance.setGunAmmo(0, 60);
         GameManager.instance.updateAmmoText();
     }
 
